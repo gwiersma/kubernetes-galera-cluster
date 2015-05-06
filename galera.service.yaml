@@ -1,0 +1,14 @@
+apiVersion: v1beta3
+kind: Service
+metadata:
+  labels:
+    name: galera
+  name: galera
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    name: galera
+  publicIPs:
+    - 172.17.8.102

@@ -1,37 +1,41 @@
-id: galera-controller
 kind: ReplicationController
-apiVersion: v1beta1
-desiredState:
-  replicas: 1
-  replicaSelector:
+apiVersion: v1beta3
+metadata:
+  name: galera-controller
+  labels:
     name: galera
-  podTemplate:
-    desiredState:
-      manifest:
-        version: v1beta1
-        id: galera
+spec:
+  replicas: 1
+  selector:
+    name: galera
+  template:
+    metadata:
+      labels:
+        name: galera
+    spec:
         containers:
           - name: galera
             image: jmdejager/docker-percona-galera
             ports:
               - containerPort: 3306
-                hostPort: 3306
               - containerPort: 4444
-                hostPort: 4444
               - containerPort: 4567
-                hostPort: 4567
               - containerPort: 4568
-                hostPort: 4568
             env:
               - name: PUBLISH
+                key: PUBLISH
                 value: "3306"
               - name: CLUSTER
+                key: CLUSTER
                 value: galera
               - name: ETCD_HOST
+                key: ETCD_HOST
                 value: 172.17.8.101
               - name: MYSQL_USER
+                key: MYSQL_USER
                 value: mysql
               - name: MYSQL_PASS
+                key: MYSQL_PASS
                 value: mysql
             volumeMounts:
               - name: database-data
@@ -41,6 +45,3 @@ desiredState:
             source:
               hostDir:
                 path: /var/lib/mysql
-
-    labels:
-      name: galera
