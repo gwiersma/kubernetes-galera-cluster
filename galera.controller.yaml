@@ -1,5 +1,5 @@
 kind: ReplicationController
-apiVersion: v1beta3
+apiVersion: v1
 metadata:
   name: galera-controller
   labels:
@@ -30,7 +30,8 @@ spec:
                 value: galera
               - name: ETCD_HOST
                 key: ETCD_HOST
-                value: 172.17.8.101
+                value: 192.168.20.40
+             #  value: 172.17.8.101
               - name: MYSQL_USER
                 key: MYSQL_USER
                 value: mysql
